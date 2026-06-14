@@ -38,5 +38,5 @@ import "@w1zll/shop-ui/styles.css";
 ## Текущий статус
 
 Сейчас пакет содержит bootstrap-настройку TypeScript, ESLint, Prettier, Vitest,
-React Testing Library, Tailwind CSS 4 и базовые UI primitives: `Button`,
-`Input`, `Label`, `Card`, `Badge`, `Skeleton`, `Separator`, `Checkbox`.
+React Testing Library, Tailwind CSS 4, базовые UI primitives, overlay primitives
+и первые shared-компоненты магазина.
