@@ -3,8 +3,12 @@
 :root {
   --shop-background: #ffffff;
   --shop-foreground: #171717;
+  --shop-card: #ffffff;
+  --shop-card-foreground: #171717;
   --shop-muted: #f3f4f6;
+  --shop-muted-foreground: #6b7280;
   --shop-border: #d1d5db;
+  --shop-input: #d1d5db;
   --shop-ring: #2563eb;
   --shop-primary: #2563eb;
   --shop-primary-hover: #1d4ed8;
@@ -12,6 +16,9 @@
   --shop-secondary: #f3f4f6;
   --shop-secondary-hover: #e5e7eb;
   --shop-secondary-foreground: #171717;
+  --shop-destructive: #dc2626;
+  --shop-destructive-hover: #b91c1c;
+  --shop-destructive-foreground: #ffffff;
 }
 
 body {
