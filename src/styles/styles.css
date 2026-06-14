@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+:root {
+  --shop-background: #ffffff;
+  --shop-foreground: #171717;
+  --shop-muted: #f3f4f6;
+  --shop-border: #d1d5db;
+  --shop-ring: #2563eb;
+  --shop-primary: #2563eb;
+  --shop-primary-hover: #1d4ed8;
+  --shop-primary-foreground: #ffffff;
+  --shop-secondary: #f3f4f6;
+  --shop-secondary-hover: #e5e7eb;
+  --shop-secondary-foreground: #171717;
+}
+
+body {
+  background: var(--shop-background);
+  color: var(--shop-foreground);
+}
