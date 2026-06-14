@@ -10,6 +10,7 @@
 - утилиту `cn`;
 - контракты браузерных событий;
 - общий CSS entrypoint `@w1zll/shop-ui/styles.css`.
+- shadcn-compatible структуру и `components.json`.
 
 ## Установка
 
@@ -37,4 +38,5 @@ import "@w1zll/shop-ui/styles.css";
 ## Текущий статус
 
 Сейчас пакет содержит bootstrap-настройку TypeScript, ESLint, Prettier, Vitest,
-React Testing Library, Tailwind CSS 4 и первый smoke-компонент `Button`.
+React Testing Library, Tailwind CSS 4 и базовые UI primitives: `Button`,
+`Input`, `Label`, `Card`, `Badge`, `Skeleton`, `Separator`, `Checkbox`.
