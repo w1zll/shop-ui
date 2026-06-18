@@ -29,7 +29,7 @@
 ```json
 {
   "dependencies": {
-    "@w1zll/shop-ui": "0.1.0"
+    "@w1zll/shop-ui": "0.2.0"
   }
 }
 ```
@@ -38,9 +38,41 @@
 
 ```ts
 import { Button, Price, RemoteErrorFallback, cn } from "@w1zll/shop-ui";
-import { SHOP_EVENTS } from "@w1zll/shop-ui/contracts";
+import {
+  dispatchShopEvent,
+  SHOP_BROADCAST_CHANNELS,
+  SHOP_EVENTS,
+  subscribeShopEvent,
+} from "@w1zll/shop-ui/contracts";
 import "@w1zll/shop-ui/styles.css";
 ```
+
+## Contracts
+
+`@w1zll/shop-ui/contracts` содержит стабильные имена браузерных событий,
+payload-типы, имена `BroadcastChannel` и маленькие type-safe helpers:
+
+```ts
+import {
+  dispatchShopEvent,
+  SHOP_EVENTS,
+  subscribeShopEvent,
+} from "@w1zll/shop-ui/contracts";
+
+const unsubscribe = subscribeShopEvent(SHOP_EVENTS.cartChanged, (event) => {
+  console.log(event.detail.itemCount);
+});
+
+dispatchShopEvent(SHOP_EVENTS.cartChanged, {
+  itemCount: 2,
+  totalCents: 159_800,
+});
+
+unsubscribe();
+```
+
+События используются только как транспорт между микрофронтендами. Источником
+истины для корзины, пользователя, избранного и заказов остаётся API.
 
 ## Tailwind CSS 4
 
