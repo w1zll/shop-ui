@@ -29,6 +29,26 @@ describe("Button", () => {
     expect(button).toHaveClass("border");
   });
 
+  it("uses pointer cursor by default and default cursor for disabled state", () => {
+    render(<Button disabled>Disabled</Button>);
+
+    const button = screen.getByRole("button", { name: "Disabled" });
+
+    expect(button).toHaveClass("cursor-pointer");
+    expect(button).toHaveClass("disabled:pointer-events-none");
+    expect(button).toHaveClass("disabled:cursor-default");
+    expect(button).toHaveClass("disabled:opacity-50");
+  });
+
+  it("allows pointer cursor to be disabled explicitly", () => {
+    render(<Button cursor="default">Static action</Button>);
+
+    const button = screen.getByRole("button", { name: "Static action" });
+
+    expect(button).toHaveClass("cursor-default");
+    expect(button).not.toHaveClass("cursor-pointer");
+  });
+
   it("does not pass button-only attributes to asChild links", () => {
     render(
       <Button asChild>

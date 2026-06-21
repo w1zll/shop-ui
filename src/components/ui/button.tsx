@@ -7,9 +7,13 @@ import { Slot } from "@radix-ui/react-slot";
 import { cn } from "../../lib/cn";
 
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--shop-ring)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--shop-ring)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:cursor-default disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
+      cursor: {
+        default: "cursor-default",
+        pointer: "cursor-pointer",
+      },
       variant: {
         primary:
           "bg-[var(--shop-primary)] text-[var(--shop-primary-foreground)] hover:bg-[var(--shop-primary-hover)]",
@@ -29,6 +33,7 @@ export const buttonVariants = cva(
       },
     },
     defaultVariants: {
+      cursor: "pointer",
       variant: "primary",
       size: "md",
     },
@@ -41,14 +46,14 @@ export interface ButtonProps
 }
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, type = "button", asChild = false, ...props }, ref) => {
+  ({ className, cursor, variant, size, type = "button", asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button";
 
     return (
       <Comp
         ref={ref}
         type={asChild ? undefined : type}
-        className={cn(buttonVariants({ variant, size }), className)}
+        className={cn(buttonVariants({ cursor, variant, size }), className)}
         {...props}
       />
     );
