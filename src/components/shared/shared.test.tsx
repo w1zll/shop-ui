@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 
 import { Button } from "../ui/button";
 import { Container } from "./container";
@@ -24,6 +24,12 @@ describe("shared components", () => {
     ).toBeInTheDocument();
   });
 
+  it("formats prices with custom locale and currency", () => {
+    render(<Price valueCents={1234} currency="USD" locale="en-US" />);
+
+    expect(screen.getByText("$12.34")).toHaveClass("tabular-nums");
+  });
+
   it("renders state components", () => {
     render(
       <div>
@@ -38,5 +44,28 @@ describe("shared components", () => {
     expect(screen.getByText("Ошибка")).toBeInTheDocument();
     expect(screen.getByLabelText("Загрузка")).toBeInTheDocument();
     expect(screen.getByText(/cart remote/)).toBeInTheDocument();
+  });
+
+  it("calls retry handlers from error fallbacks", () => {
+    const onErrorRetry = vi.fn();
+    const onRemoteRetry = vi.fn();
+
+    render(
+      <div>
+        <ErrorState title="Recoverable error" retryLabel="Retry error" onRetry={onErrorRetry} />
+        <RemoteErrorFallback
+          remoteName="account remote"
+          onRetry={onRemoteRetry}
+          data-testid="account-remote-fallback"
+        />
+      </div>,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Retry error" }));
+    fireEvent.click(screen.getAllByRole("button")[1]);
+
+    expect(screen.getByTestId("account-remote-fallback")).toHaveTextContent("account remote");
+    expect(onErrorRetry).toHaveBeenCalledTimes(1);
+    expect(onRemoteRetry).toHaveBeenCalledTimes(1);
   });
 });

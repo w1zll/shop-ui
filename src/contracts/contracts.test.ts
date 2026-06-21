@@ -55,6 +55,43 @@ describe("shop contracts", () => {
     expect(events).toEqual([{ itemCount: 2, totalCents: 159_800 }]);
   });
 
+  it("removes a listener when the abort signal is aborted", () => {
+    const target = new EventTarget();
+    const controller = new AbortController();
+    const events: CartChangedDetail[] = [];
+
+    subscribeShopEvent(
+      SHOP_EVENTS.cartChanged,
+      (event) => {
+        events.push(event.detail);
+      },
+      { signal: controller.signal, target },
+    );
+
+    dispatchShopEvent(SHOP_EVENTS.cartChanged, { itemCount: 1 }, target);
+    controller.abort();
+    dispatchShopEvent(SHOP_EVENTS.cartChanged, { itemCount: 2 }, target);
+
+    expect(events).toEqual([{ itemCount: 1 }]);
+  });
+
+  it("returns safe no-op helpers without a browser event target", () => {
+    const originalWindow = globalThis.window;
+
+    vi.stubGlobal("window", undefined);
+
+    try {
+      const unsubscribe = subscribeShopEvent(SHOP_EVENTS.cartChanged, () => undefined);
+
+      expect(dispatchShopEvent(SHOP_EVENTS.cartChanged, { itemCount: 1 })).toBe(false);
+      expect(() => {
+        unsubscribe();
+      }).not.toThrow();
+    } finally {
+      vi.stubGlobal("window", originalWindow);
+    }
+  });
+
   it("exports reusable event and channel union types", () => {
     const eventName: ShopEventName = SHOP_EVENTS.authChanged;
     const channelName: ShopBroadcastChannelName = SHOP_BROADCAST_CHANNELS.auth;
