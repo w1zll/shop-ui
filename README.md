@@ -27,7 +27,7 @@
 ```json
 {
   "dependencies": {
-    "@w1zll/shop-ui": "0.2.1"
+    "@w1zll/shop-ui": "0.2.2"
   }
 }
 ```
